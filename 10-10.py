@@ -1,4 +1,4 @@
-filepath = "C:\\Users\\Garrett Bachant\\Downloads\\Beowulf.txt"
+filepath = "Beowulf.txt"
 
 with open(filepath) as f_obj:
     contents = f_obj.read()
