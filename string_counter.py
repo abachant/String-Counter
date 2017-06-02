@@ -1,26 +1,44 @@
 import os
 
 filepath = str(input("What directory are the files you want to analyze in? "))
-searchword = str(input("What string would you like to search for? "))
+searchwords =[]
+all_results = []
+author_name = str(input("What is the Author's Name?"))
+titles=[]
 
 # Get a list of text files in the chosen directory
 bibliography = [f for f in os.listdir(filepath) if f.endswith("txt")]
+def get_info():
+    for i in bibliography:
+        x = i.replace(".txt", "")
+        titles.append(x)
+
+def getstrings():
+    """Get the strings the user wants to search for"""
+    while True:
+        searchword = str(input("String to search for?('__end__' to end) "))
+        if searchword != "__end__":
+            searchwords.append(searchword)
+        else:
+            break
 
 def countstring():
-    """List the number of instances of the searchword per textfile"""
+    """List the total instances of searchword per textfiles in bibliography"""
     results = {}
+    getstrings()
     for title in bibliography:
-        print("Attempting to find", searchword, "in", title)
         results[title] = {}
         finalpath = filepath + "/" + str(title)
         try:
             with open(finalpath) as f_obj:
                 contents = f_obj.read()
-                searchcount = contents.lower().count(searchword)
-                results[title][searchword] = searchcount
+                for searchword in searchwords:
+                    searchcount = contents.lower().count(searchword)
+                    results[title][searchword] = searchcount
         except FileNotFoundError:
             print("I bloody well can't find your file, m8")
+    all_results.append(results)
     return results
 
-results = countstring()
-print(results)
+countstring()
+print(all_results)
