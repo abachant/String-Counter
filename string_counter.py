@@ -52,6 +52,11 @@ countstring()
 all_results = all_results[0]
 
 # Put all results in a Pandas Data Frame
-newdata = pd.DataFrame.from_dict(all_results, orient="columns", dtype=None)
+newdata = pd.DataFrame.from_dict(all_results, orient="index", dtype=None)
 newdata.plot.bar(stacked=True)
+
+
+plt.title(author_name)
+plt.xlabel("Title")
+plt.ylabel("Instances")
 plt.show()
