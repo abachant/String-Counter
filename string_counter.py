@@ -1,9 +1,12 @@
 import os
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
 
 filepath = str(input("What directory are the files you want to analyze in? "))
-searchwords =[]
+searchwords = []
 all_results = []
-author_name = str(input("What is the Author's Name?"))
+author_name = str(input("What is the Author's Name? "))
 titles=[]
 
 # Get a list of text files in the chosen directory
@@ -11,7 +14,9 @@ bibliography = [f for f in os.listdir(filepath) if f.endswith("txt")]
 def get_info():
     for i in bibliography:
         x = i.replace(".txt", "")
+        x = x.replace("_", " ")
         titles.append(x)
+        return titles
 
 def getstrings():
     """Get the strings the user wants to search for"""
@@ -36,9 +41,14 @@ def countstring():
                     searchcount = contents.lower().count(searchword)
                     results[title][searchword] = searchcount
         except FileNotFoundError:
-            print("I bloody well can't find your file, m8")
+            print("I can't find " + str(title))
     all_results.append(results)
     return results
 
+
 countstring()
-print(all_results)
+all_results = all_results[0]
+
+# Put all results in a Pandas Data Frame
+newdata = pd.DataFrame.from_dict(all_results, orient="columns", dtype=None)
+newdata.plot.bar(stacked=True)
