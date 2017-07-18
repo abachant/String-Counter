@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -52,3 +54,4 @@ all_results = all_results[0]
 # Put all results in a Pandas Data Frame
 newdata = pd.DataFrame.from_dict(all_results, orient="columns", dtype=None)
 newdata.plot.bar(stacked=True)
+plt.show()
